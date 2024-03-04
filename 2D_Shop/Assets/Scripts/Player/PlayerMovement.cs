@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
     private Vector3 targetPosition;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             SetTargetPosition();
         }
@@ -60,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
             agent.SetDestination(targetPosition);
-            //transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         }
         else
         {
