@@ -6,18 +6,16 @@ using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Player player;
     private Vector3 targetPosition;
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
     private NavMeshAgent agent;
 
     private void Start()
     {
+        player = FindObjectOfType<Player>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        animator = GetComponentInChildren<Animator>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -39,15 +37,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (direction != Vector3.zero)
         {
-            animator.SetBool("Moving", true);
+            player.PlayerAnimator.SetBool("Moving", true);
 
             if (direction.x < 0)
             {
-                spriteRenderer.flipX = false;
+                player.SpriteRenderer.flipX = false;
             }
             else
             {
-                spriteRenderer.flipX = true;
+                player.SpriteRenderer.flipX = true;
             }
         }
     }
@@ -60,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            animator.SetBool("Moving", false);
+            player.PlayerAnimator.SetBool("Moving", false);
         }
     }
 }

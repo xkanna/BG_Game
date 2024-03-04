@@ -11,7 +11,7 @@ public class ShopItem : MonoBehaviour
 
     public int itemIndex;
     public int itemCost;
-    private ShopManager shopManager;
+    private ShopManager manager;
 
     public void SetupShopItem(Sprite icon, int cost, int index, ShopManager manager)
     {
@@ -19,11 +19,11 @@ public class ShopItem : MonoBehaviour
         itemCost = cost;
         costText.text = cost.ToString() + "$";
         itemIndex = index;
-        shopManager = manager;
+        this.manager = manager;
     }
 
-    public void MoveItem()
+    public void Click()
     {
-        shopManager.ChangeSkinPosition(this);
+        manager.ShopItemClicked(this);
     }
 }

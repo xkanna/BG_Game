@@ -61,7 +61,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void ChangeSkinPosition(ShopItem skin)
+    public void ShopItemClicked(ShopItem skin)
     {
         if (skinsInShop.Contains(skin))
         {
