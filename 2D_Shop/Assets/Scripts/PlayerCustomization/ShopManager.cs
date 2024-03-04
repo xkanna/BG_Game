@@ -46,7 +46,11 @@ public class ShopManager : MonoBehaviour
     {
         ClearLists();
         CalculatePrice();
-        
+        SpawnShopItems();
+    }
+
+    private void SpawnShopItems()
+    {
         foreach (var skin in allSkins)
         {
             var ownedSkins = PlayerSave.Instance.GetOwnedSkins();
@@ -98,5 +102,4 @@ public class ShopManager : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
-    
 }

@@ -17,7 +17,7 @@ public class ShopItem : MonoBehaviour
     {
         image.sprite = icon;
         itemCost = cost;
-        costText.text = cost.ToString();
+        costText.text = cost.ToString() + "$";
         itemIndex = index;
         shopManager = manager;
     }
