@@ -7,5 +7,6 @@ public class CustomizationButton : MonoBehaviour, IButtonAction
     public void Click()
     {
         UiManager.Instance.ShowCustomization();
+        CameraManager.Instance.SwitchToCamera("cm-zoomed");
     }
 }
