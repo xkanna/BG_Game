@@ -4,39 +4,32 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ShopManager : MonoBehaviour
+public class SellItemManager : MonoBehaviour
 {
     [SerializeField] private List<PlayerSkin> allSkins;
-    [SerializeField] private ShopItem shopItemPrefab;
+    [SerializeField] private SellShopItem shopItemPrefab;
     [SerializeField] private GameObject shopContent;
     [SerializeField] private GameObject cartContent;
     [SerializeField] private TextMeshProUGUI totalCost;
     [SerializeField] private CoinAmount coins;
 
     private int totalPrice = 0;
-    private List<ShopItem> skinsInShop;
-    private List<ShopItem> skinsInCart;
+    private List<SellShopItem> skinsInInventory;
+    private List<SellShopItem> skinsInCart;
 
-    private void OnEnable()
-    {
-        ClearLists();
-        CalculatePrice();
-        SpawnShopItems();
-    }
-    
     private void ClearLists()
     {
-        skinsInShop ??= new List<ShopItem>();
-        skinsInCart ??= new List<ShopItem>();
+        skinsInInventory ??= new List<SellShopItem>();
+        skinsInCart ??= new List<SellShopItem>();
         
-        if (skinsInShop.Count > 0)
+        if (skinsInInventory.Count > 0)
         {
-            foreach (var shopItem in skinsInShop)
+            foreach (var shopItem in skinsInInventory)
             {
                 Destroy(shopItem.gameObject);
             }
         }
-        skinsInShop.Clear();
+        skinsInInventory.Clear();
         
         if (skinsInCart.Count > 0)
         {
@@ -46,7 +39,13 @@ public class ShopManager : MonoBehaviour
             }
         }
         skinsInCart.Clear();
-        
+    }
+
+    private void OnEnable()
+    {
+        ClearLists();
+        CalculatePrice();
+        SpawnShopItems();
     }
 
     private void SpawnShopItems()
@@ -54,25 +53,25 @@ public class ShopManager : MonoBehaviour
         foreach (var skin in allSkins)
         {
             var ownedSkins = PlayerSave.Instance.GetOwnedSkins();
-            if (ownedSkins.Contains(skin)) continue;
+            if (!ownedSkins.Contains(skin) || skin.isPermanent) continue;
             var skinShopItem = Instantiate(shopItemPrefab, shopContent.transform);
             skinShopItem.SetupShopItem(skin.skinIcon, skin.cost, skin.playerSkinIndex, this);
-            skinsInShop.Add(skinShopItem);
+            skinsInInventory.Add(skinShopItem);
         }
     }
 
-    public void ShopItemClicked(ShopItem skin)
+    public void ShopItemClicked(SellShopItem skin)
     {
-        if (skinsInShop.Contains(skin))
+        if (skinsInInventory.Contains(skin))
         {
-            skinsInShop.Remove(skin);
+            skinsInInventory.Remove(skin);
             skinsInCart.Add(skin);
             skin.transform.parent = cartContent.transform;
         } 
         else if (skinsInCart.Contains(skin))
         {
             skinsInCart.Remove(skin);
-            skinsInShop.Add(skin);
+            skinsInInventory.Add(skin);
             skin.transform.parent = shopContent.transform;
         }
         CalculatePrice();
@@ -89,17 +88,18 @@ public class ShopManager : MonoBehaviour
         totalCost.text = totalPrice.ToString();
     }
 
-    public void Purchase()
+    public void Sell()
     {
         if (totalPrice <= coins.Amount)
         {
-            coins.ChangeAmount(-totalPrice);
+            coins.ChangeAmount(totalPrice);
             foreach (var skinInCart in skinsInCart)
             {
                 var skin = allSkins.Find(x => x.playerSkinIndex == skinInCart.itemIndex);
-                PlayerSave.Instance.AddSkin(skin);
+                PlayerSave.Instance.RemoveSkin(skin);
             }
         }
+        Player.Instance.CheckIfOwnsSkin();
         gameObject.SetActive(false);
     }
 }

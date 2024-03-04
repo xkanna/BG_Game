@@ -10,12 +10,6 @@ public class CustomizationManager : MonoBehaviour
     
     private List<ClosetItem> ownedSkins;
     private PlayerSkin currentSkin;
-    private Player player;
-
-    private void Awake()
-    {
-        player = FindObjectOfType<Player>();
-    }
 
     private void ClearLists()
     {
@@ -41,7 +35,7 @@ public class CustomizationManager : MonoBehaviour
 
     private void GetCurrentSkin()
     {
-        currentSkin = PlayerSave.Instance.GetOwnedSkins().Find(x => x.playerSkinIndex == player.CurrentSkin);
+        currentSkin = PlayerSave.Instance.GetOwnedSkins().Find(x => x.playerSkinIndex == Player.Instance.CurrentSkin);
     }
 
     private void SpawnShopItems()
@@ -49,7 +43,7 @@ public class CustomizationManager : MonoBehaviour
         foreach (var skin in PlayerSave.Instance.GetOwnedSkins())
         {
             var skinShopItem = Instantiate(itemPrefab, closetContent.transform);
-            var isEquipped = player.CurrentSkin == skin.playerSkinIndex;
+            var isEquipped = Player.Instance.CurrentSkin == skin.playerSkinIndex;
             skinShopItem.SetupClosetItem(skin.skinIcon, isEquipped, skin.playerSkinIndex, this);
             ownedSkins.Add(skinShopItem);
         }
@@ -61,12 +55,12 @@ public class CustomizationManager : MonoBehaviour
             ownedSkin.ChangeIsEquipped(ownedSkin.itemIndex == skin.itemIndex);
         }
         currentSkin = PlayerSave.Instance.GetOwnedSkins().Find(x => x.playerSkinIndex == skin.itemIndex);
-        player.ChangePlayerPrefab(currentSkin.playerSkinPrefab, currentSkin.playerSkinIndex);
+        Player.Instance.ChangePlayerPrefab(currentSkin.playerSkinPrefab, currentSkin.playerSkinIndex);
     }
 
     public void EquipSkin()
     {
-        player.ChangePlayerPrefab(currentSkin.playerSkinPrefab, currentSkin.playerSkinIndex);
+        Player.Instance.ChangePlayerPrefab(currentSkin.playerSkinPrefab, currentSkin.playerSkinIndex);
         CameraManager.Instance.SwitchToCamera("cm-main");
         gameObject.SetActive(false);
     }
