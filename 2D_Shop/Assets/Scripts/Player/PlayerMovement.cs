@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,9 +9,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 targetPosition;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private NavMeshAgent agent;
 
     private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
         animator = GetComponentInChildren<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
@@ -41,11 +46,11 @@ public class PlayerMovement : MonoBehaviour
             // Flip the character sprite if moving left
             if (direction.x < 0)
             {
-                spriteRenderer.flipX = true;
+                spriteRenderer.flipX = false;
             }
             else
             {
-                spriteRenderer.flipX = false;
+                spriteRenderer.flipX = true;
             }
         }
     }
@@ -54,7 +59,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            agent.SetDestination(targetPosition);
+            //transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         }
         else
         {
