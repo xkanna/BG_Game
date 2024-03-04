@@ -40,10 +40,7 @@ public class PlayerMovement : MonoBehaviour
         if (direction != Vector3.zero)
         {
             animator.SetBool("Moving", true);
-            animator.SetFloat("Horizontal", direction.x);
-            animator.SetFloat("Vertical", direction.y);
 
-            // Flip the character sprite if moving left
             if (direction.x < 0)
             {
                 spriteRenderer.flipX = false;
@@ -64,8 +61,6 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             animator.SetBool("Moving", false);
-            animator.SetFloat("Horizontal", 0);
-            animator.SetFloat("Vertical", 0);
         }
     }
 }
