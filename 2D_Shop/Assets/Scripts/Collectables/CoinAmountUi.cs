@@ -8,6 +8,7 @@ public class CoinAmountUi : MonoBehaviour
 {
     [SerializeField] private CoinAmount coins;
     [SerializeField] private TextMeshProUGUI coinsText;
+    [SerializeField] private Animator animator;
 
     private void Start()
     {
@@ -18,5 +19,6 @@ public class CoinAmountUi : MonoBehaviour
     private void ChangeText()
     {
         coinsText.text = coins.Amount.ToString();
+        animator.Play("AmountChanged");
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 970020f9658d75f468b384a73a93f333, type: 3}
-  m_Name: PlayerSkin_000 3
+  m_Name: PlayerSkin_003
   m_EditorClassIdentifier: 
   playerSkinPrefab: {fileID: 6323616739901478146, guid: a8cc2bc4eadecf1478ef2fd4578205c3, type: 3}
   skinIcon: {fileID: 21300000, guid: 19a288f1cf68494384570d594c70f165, type: 3}

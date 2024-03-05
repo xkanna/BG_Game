@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 970020f9658d75f468b384a73a93f333, type: 3}
-  m_Name: PlayerSkin_000 1
+  m_Name: PlayerSkin_004
   m_EditorClassIdentifier: 
-  playerSkinPrefab: {fileID: 6323616739901478146, guid: 300773fc94755354d9bba50723787c9e, type: 3}
-  skinIcon: {fileID: 21300000, guid: 5fae80a4341b4bdb978530f927baf2fa, type: 3}
-  playerSkinIndex: 1
-  cost: 180
-  isPermanent: 1
+  playerSkinPrefab: {fileID: 6323616739901478146, guid: 7545c1acee373274abffe0bbfe287b89, type: 3}
+  skinIcon: {fileID: 21300000, guid: da10953277554b3a81d08a0be173b975, type: 3}
+  playerSkinIndex: 4
+  cost: 100
+  isPermanent: 0

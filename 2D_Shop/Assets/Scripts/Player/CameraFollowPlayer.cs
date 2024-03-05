@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CameraFollowPlayer : MonoBehaviour
 {
-    [SerializeField] private GameObject target;
     [SerializeField] private Vector3 offset;
     [SerializeField] private float followSpeed = 5f;
     [SerializeField] private float delay = 0.5f;
@@ -19,7 +18,7 @@ public class CameraFollowPlayer : MonoBehaviour
     {
         while (true)
         {
-            var targetPosition = target.transform.position + offset;
+            var targetPosition = Player.Instance.transform.position + offset;
             transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
             yield return new WaitForSeconds(delay);
         }
